@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist\css\bootstrap.css">
+    <script src="jquery-3.4.1.min.js"></script>
+    <script src="bootstrap-3.3.7-dist\js\bootstrap.min.js"></script>
+</head>
+<style>
+    .nav {
+        overflow: hidden;
+        text-align: center;
+        background-color: #f4f4f4;
+    }
+
+    .nav li {
+        float: left;
+        padding: 5px;
+        width: 100px;
+        color: #666;
+        list-style: none;
+        border-left: 1px solid #f4f4f4;
+        cursor: pointer;
+    }
+
+    .nav li:hover,
+    .selected {
+        background-color: #ecebeb;
+        border-left: 1px solid #ecebeb;
+    }
+
+    .content {
+        border: 1px solid #f4f4f4;
+        height: 80px;
+        padding: 10px;
+        overflow: hidden;
+    }
+
+
+    .form-control {
+        float: left;
+        width: 80%;
+        transform: translate(30px, 0px);
+        margin-left: 10px;
+    }
+
+    #img {
+        padding-top: 5px;
+    }
+
+    #img .content {
+        width: 100%;
+        height: 300px;
+    }
+
+    #img img {
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+    }
+
+    .function {
+        padding: 30px 50px;
+    }
+
+    .function .input_group input {
+        margin: 3px 0 3px 15px;
+    }
+
+    #table {
+        background-color: red;
+    }
+
+    /* .form {
+        position: absolute;
+        width: 400px;
+        right: 20px;
+        top: 30px;
+    } */
+    .show {
+        display: block;
+    }
+    .list {
+        display: none;
+    }
+</style>
+
+<body>
+    <div class="container-fluid">
+        <div id="img">
+            <div class="content">
+                <img src="banner.jpg" alt="">
+            </div>
+        </div>
+        <ul class="nav">
+            <li class="selected">新增书籍</li>
+            <li>新增交易</li>
+            <li>删除书籍</li>
+            <li>修改书籍</li>
+            <li>书籍查询</li>
+            <li>交易查询</li>
+        </ul>
+    </div>
+
+    <div class="container-fluid tab">
+        <div class="function list show add_div">
+            <div class="dropdown" style="float: left;">
+                <p class="btn btn-success">新增书籍：</p>
+            </div>
+            <button id="add_btn" class="btn btn-success" type="button" style="float: right;">确定</button>
+            <input type="text" class="form-control" placeholder="书籍编号" style="width: 15%;">
+            <input type="text" class="form-control" placeholder="书名" style="width: 15%;">
+            <input type="text" class="form-control" placeholder="作者" style="width: 15%;">
+            <input type="number" class="form-control" placeholder="数量" style="width: 15%;">
+            <input type="text" class="form-control" placeholder="价格" style="width: 15%;">
+        </div>
+
+        <div class="function list">
+            <div class="dropdown" style="float: left;">
+                <p class="btn btn-success">新增交易：</p>
+            </div>
+            <button id="addBusiness_btn" class="btn btn-success" type="button" style="float: right;">确定</button>
+            <input type="text" class="form-control" placeholder="订单编号" style="width: 15%;">
+            <input type="text" class="form-control" placeholder="书名" style="width: 15%;">
+            <input type="text" class="form-control" placeholder="买家姓名" style="width: 15%;">
+            <input type="text" class="form-control" placeholder="书本数量" style="width: 15%;">
+            <input type="text" class="form-control" placeholder="总价价格" style="width: 15%;">
+        </div>
+
+        <div class="function list">
+            <div class="dropdown" style="float: left;">
+                <p class="btn btn-success">删除书籍：</p>
+            </div>
+            <button id="delete_btn" class="btn btn-success" type="button" style="float: right;">确定</button>
+            <input type="text" class="form-control" placeholder="书籍编号" style="width: 30%;">
+            <input type="text" class="form-control" placeholder="书名" style="width: 30%;">
+        </div>
+
+        <div class="function list">
+            <div class="dropdown" style="float: left;">
+                <p class="btn btn-success">修改书籍：</p>
+            </div>
+            <button id="modify_btn" class="btn btn-success" type="button" style="float: right;">确定</button>
+            <input type="text" class="form-control" placeholder="书籍编号" style="width: 30%;">
+            <input type="text" class="form-control" placeholder="纠正价格" style="width: 30%;">
+        </div>
+
+        <div class="function list">
+            <div class="dropdown" style="float: left;">
+                <p class="btn btn-success">书籍查询：</p>
+            </div>
+            <button id="serch_btn" class="btn btn-success" type="button" style="float: right;">查询</button>
+            <input type="text" class="form-control" placeholder="书籍编号/书名/作者">
+        </div>
+
+        <div class="function list">
+            <div class="dropdown" style="float: left;">
+                <p class="btn btn-success">交易记录：</p>
+            </div>
+            <button id="serchBusiness_btn" class="btn btn-success" type="button" style="float: right;">查询</button>
+            <input type="text" class="form-control" placeholder="订单编号/书名/买家姓名/交易时间">
+        </div>
+
+    </div>
+
+    <div class="container" style="margin-top: 20px;">
+        <div class="table">
+            <table class="table table-hover" id="book_table">
+                <thead>
+                    <tr>
+                        <td>书籍编号</td>
+                        <td>书名</td>
+                        <td>作者</td>
+                        <td>数量</td>
+                        <td>价格</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-hover" id="transaction_table">
+                <thead>
+                    <tr>
+                        <td>订单编号编号</td>
+                        <td>书名</td>
+                        <td>买家姓名</td>
+                        <td>数量</td>
+                        <td>总价格</td>
+                        <td>交易时间</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr> -->
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+
+</body>
+
+<script>
+    $(function () {
+
+        let now = new Date();
+        let $time = now.getFullYear() + "-" + ((now.getMonth() + 1) < 10 ? "0" : "") + (now
+            .getMonth() + 1) + "-" + (now.getDate() < 10 ? "0" : "") + now.getDate();
+
+        $("#book_table").hide();
+        $("#transaction_table").hide();
+
+        /* 新增书籍 */
+        $("#add_btn").on("click", function () {
+            let time = $time;
+            let sendData = {
+                behavior: "新增书籍",
+                time: time,
+                book_id: $(".add_div>input").eq(0).val(),
+                book_name: $(".add_div>input").eq(1).val(),
+                book_author: $(".add_div>input").eq(2).val(),
+                book_num: $(".add_div>input").eq(3).val(),
+                book_price: $(".add_div>input").eq(4).val()
+            };
+            let confirm0 = confirm("你确定添加书籍吗？");
+
+            console.log(sendData)
+            if (confirm0 == true) {
+                $.ajax({
+                    type: "post",
+                    url: "addbook",
+                    data: sendData,
+                    dataType: "json",
+                    success: function (response) {
+
+                        alert("书本添加成功！");
+                    },
+                    complete: function (response) {
+                        for (let i = 0; i < $(".add_div>input").length; i++) {
+                            $(".add_div>input").eq(i).val("");
+                        }
+                    }
+                });
+            } else {
+                for (let i = 0; i < $(".add_div>input").length; i++) {
+                    $(".add_div>input").eq(i).val("");
+                }
+            }
+
+        });
+
+        /* 新增交易 */
+        $("#addBusiness_btn").on("click", function () {
+            let $self = $(this);
+            let time = $time;
+            let sendData = {
+                time: time,
+                behavior: "新增交易",
+                book_id: $(this).parent().children("input").eq(0).val(),
+                book_name: $(this).parent().children("input").eq(1).val(),
+                buyer_name: $(this).parent().children("input").eq(2).val(),
+                number: $(this).parent().children("input").eq(3).val(),
+                amount: $(this).parent().children("input").eq(4).val()
+            }
+
+            $.ajax({
+                type: "post",
+                url: "addtransaction",
+                data: sendData,
+                dataType: "json",
+                success: function (response) {
+
+                    alert("交易添加成功！");
+                },
+                complete: function () {
+                    for (let i = 0; i < $self.parent().children("input").length; i++) {
+                        $self.parent().children("input").eq(i).val("");
+                    }
+                },
+                error: function(xhr){
+                	console.log(xhr.responseText);
+                }
+            });
+            console.log(sendData)
+        });
+
+        /* 删除书籍 */
+        $("#delete_btn").on("click", function () {
+            let $self = $(this);
+            let time = $time;
+            let sendData = {
+                time: time,
+                behavior: "删除书籍",
+                book_id: $(this).parent().children("input").eq(0).val(),
+                book_name: $(this).parent().children("input").eq(1).val()
+            }
+            console.log(sendData);
+
+            $.ajax({
+                type: "post",
+                url: "delbook",
+                data: sendData,
+                dataType: "json",
+                success: function (response) {
+
+                    alert("成功删除！");
+                },
+                complete: function () {
+                    for (let i = 0; i < $self.parent().children("input").length; i++) {
+                        $self.parent().children("input").eq(i).val("");
+                    }
+                }
+            });
+        });
+
+        /* 修改书籍信息 */
+        $("#modify_btn").on("click", function () {
+            let time = $time;
+            let $self = $(this);
+            let sendData = {
+                time: time,
+                behavior: "修改书籍",
+                book_id: $(this).parent().children("input").eq(0).val(),
+                book_price: $(this).parent().children("input").eq(1).val(),
+            }
+            console.log(sendData);
+
+            $.ajax({
+                type: "post",
+                url: "change",
+                data: sendData,
+                dataType: "json",
+                success: function (response) {
+
+                    alert("修改成功！");
+                },
+                error: function (response) {
+
+                },
+                complete: function () {
+                    for (let i = 0; i < $self.parent().children("input").length; i++) {
+                        $self.parent().children("input").eq(i).val("");
+                    }
+                }
+            });
+        })
+
+        /* 书籍查询 */
+        $("#serch_btn").on("click", function () {
+            let time = $time;
+            let $self = $(this);
+            let sendData = {
+                time: time,
+                behavior: "书籍查询",
+                content: $(this).parent().children("input").eq(0).val()
+            };
+
+
+            // let tr = "<tr><td></td><td></td><td></td><td></td><td></td></tr>";
+
+            // console.log(sendData);
+            // $("#book_table").show();
+            // console.log($("#book_table>tbody>tr").eq(0).children().length);
+            // $("#book_table>tbody>tr").eq(0).children().eq(0).html("123");
+            
+
+
+            $.ajax({
+                type: "post",
+                url: "searchbook",
+                data: sendData,
+                dataType: "json",
+                success: function (response) {
+                    let len = response.length;
+                    let tableLen = $("#book_table>tbody>tr").length;
+                    let tr = "<tr><td></td><td></td><td></td><td></td><td></td></tr>";
+
+                    $("#transaction_table").hide();
+                    $("#book_table").show();
+
+                    for(let i=0; i<tableLen; i++){  //删除之前的表格列
+                        $("#book_table>tbody>tr").eq(i).remove();
+                    }   
+
+                    
+                    for(let i=0; i<len; i++){
+                        $("#book_table>tbody").append(tr);
+                        $("#book_table>tbody>tr").eq(i).children().eq(0).html(response[i].bid);
+                        $("#book_table>tbody>tr").eq(i).children().eq(1).html(response[i].bname);
+                        $("#book_table>tbody>tr").eq(i).children().eq(2).html(response[i].author);
+                        $("#book_table>tbody>tr").eq(i).children().eq(3).html(response[i].quantity+"本");
+                        $("#book_table>tbody>tr").eq(i).children().eq(4).html(response[i].price.toFixed(2)+"￥");
+                    }
+					
+                },
+                error: function (response) {
+
+                    alert("查询失败！")
+                },
+                complete: function () {
+                    for (let i = 0; i < $self.parent().children("input").length; i++) {
+                        $self.parent().children("input").eq(i).val("");
+                    }
+                }
+            });
+        });
+
+        /* 查询交易记录 */
+        $("#serchBusiness_btn").on("click", function () {
+            let time = $time;
+            let $self = $(this);
+            let sendData = {
+                time: time,
+                behavior: "交易记录查询",
+                content: $(this).parent().children("input").eq(0).val()
+            };
+
+            console.log(sendData);
+
+            $.ajax({
+                type: "post",
+                url: "searchOrder",
+                data: sendData,
+                dataType: "json",
+                success: function (response) {
+                	let tr = "<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+                    let len = response.length;
+                    let transactionLen = $("#book_table>tbody>tr").length;
+
+                    console.log(response);
+                    $("#transaction_table").show();
+                    $("#book_table").hide();
+                    for(let i=0; i<transactionLen; i++){  //删除之前的表格列
+                        $("#transaction_table>tbody>tr").eq(i).remove();
+                    }
+                    for(let i=0; i<len; i++){
+                        $("#transaction_table>tbody").append(tr);
+                        $("#transaction_table>tbody>tr").eq(i).children().eq(0).html(response[i].bid);
+                        $("#transaction_table>tbody>tr").eq(i).children().eq(1).html(response[i].bname);
+                        $("#transaction_table>tbody>tr").eq(i).children().eq(2).html(response[i].uname);
+                        $("#transaction_table>tbody>tr").eq(i).children().eq(3).html(response[i].quantity+"本");
+                        $("#transaction_table>tbody>tr").eq(i).children().eq(4).html(response[i].amount.toFixed(2)+"￥");
+                        $("#transaction_table>tbody>tr").eq(i).children().eq(5).html(response[i].time);
+                    }
+                },
+                error: function (response) {
+
+                    alert("查询失败！")
+                },
+                complete: function () {
+                    for (let i = 0; i < $self.parent().children("input").length; i++) {
+                        $self.parent().children("input").eq(i).val("");
+                    }
+                }
+            });
+        });
+
+
+        $(".nav li").click(function () {
+        	let divShow = $(".content").children('.list');
+            $("#book_table").hide();
+            $("#transaction_table").hide();
+
+
+            if (!$(this).hasClass('selected')) {
+                let index = $(this).index();
+                $(this).addClass('selected').siblings('li').removeClass('selected');
+                $(".function").eq(index).addClass('show')
+                $(".function").eq(index).siblings('.function').removeClass('show');
+            }
+        });
+
+        // function deleteInput(currentNum, previousNum) { //删除不需要的input框
+
+        //     if (currentNum > previousNum) {
+        //         for (let i = previousNum; i < currentNum; i++) {
+        //             $(".input_group").children().last().remove();
+        //         }
+        //     }
+        // }
+
+
+    });
+</script>
+
+</html>

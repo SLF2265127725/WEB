@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+    <servlet>
+        <servlet-name>Servlet.addToInventoryServlet</servlet-name>
+        <servlet-class>Servlet.addToInventoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet.addToInventoryServlet</servlet-name>
+        <url-pattern>/addbook</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Servlet.searchOrderServlet</servlet-name>
+        <servlet-class>Servlet.searchOrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet.searchOrderServlet</servlet-name>
+        <url-pattern>/searchOrder</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Servlet.SearchBookServlet</servlet-name>
+        <servlet-class>Servlet.SearchBookServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet.SearchBookServlet</servlet-name>
+        <url-pattern>/searchbook</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Servlet.newTransaction</servlet-name>
+        <servlet-class>Servlet.newTransaction</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet.newTransaction</servlet-name>
+        <url-pattern>/addtransaction</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Servlet.delToInventory</servlet-name>
+        <servlet-class>Servlet.delToInventory</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet.delToInventory</servlet-name>
+        <url-pattern>/delbook</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Servlet.changeToInventory</servlet-name>
+        <servlet-class>Servlet.changeToInventory</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet.changeToInventory</servlet-name>
+        <url-pattern>/change</url-pattern>
+    </servlet-mapping>
+</web-app>
